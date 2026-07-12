@@ -3,262 +3,314 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flowen — AI Designer &amp; Planner</title>
+  <title>Flowen — AI Designer &amp; Builder</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Gowun+Dodum&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Gowun+Dodum&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
   <style>
-
     :root {
       --white:      #FFFDF8;
-      --cream:      #FFF8EE;
+      --cream:      #FFF9F2;
       --gold:       #B8963E;
       --gold-light: #D4AE5A;
       --gold-pale:  #F0DCA8;
       --gold-bg:    #FBF3E0;
-      --pink:       #D4788E;
-      --pink-light: #E8A0B0;
-      --pink-pale:  #FCEEF2;
+      --rose:       #C96880;
+      --rose-mid:   #E08FAA;
+      --rose-pale:  #FDF0F4;
+      --lilac:      #9B8FBD;
       --ink:        #1E1810;
       --ink-mid:    #4A3D2E;
-      --ink-soft:   #8A7A68;
-      --border:     rgba(184,150,62,0.22);
+      --ink-soft:   #9A8A78;
+      --border:     rgba(184,150,62,0.18);
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
     body {
       background: var(--white);
       color: var(--ink);
       font-family: 'Gowun Dodum', 'Apple SD Gothic Neo', sans-serif;
-      font-weight: 400;
-      font-size: 17px;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    /* ─── NAV ─────────────────────────────────── */
+    /* ── AMBIENT PETALS ── */
+    .petal {
+      position: fixed; pointer-events: none; z-index: 0;
+      border-radius: 60% 40% 55% 45%;
+      opacity: 0; animation: drift linear infinite;
+    }
+    @keyframes drift {
+      0%   { opacity:0; transform:translateY(-12px) rotate(0deg) scale(.8); }
+      6%   { opacity:.45; }
+      92%  { opacity:.15; }
+      100% { opacity:0; transform:translateY(106vh) rotate(600deg) scale(1.1); }
+    }
+
+    /* ── NAV ── */
     nav {
-      position: fixed; top:0; left:0; right:0; z-index:200;
+      position: fixed; top:0; left:0; right:0; z-index: 300;
       display: flex; justify-content:space-between; align-items:center;
-      padding: 22px 64px;
-      background: rgba(255,253,248,0.92);
-      backdrop-filter: blur(16px);
+      padding: 20px 60px;
+      background: rgba(255,253,248,.88);
+      backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--border);
     }
     .logo {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem; font-weight: 600; letter-spacing: 0.08em;
-      color: var(--ink); text-decoration: none;
+      font-size: 1.55rem; font-weight: 600; letter-spacing:.08em;
+      color: var(--ink); text-decoration:none;
     }
-    .logo em { color: var(--gold); font-style: italic; }
-    .nav-links { display:flex; gap:32px; list-style:none; }
+    .logo em { color:var(--rose); font-style:italic; }
+    .nav-links { display:flex; gap:30px; list-style:none; }
     .nav-links a {
-      font-size: 0.74rem; font-weight: 500; letter-spacing: 0.18em;
       font-family: 'Pretendard', sans-serif;
-      text-transform: uppercase; color: var(--ink-mid); text-decoration: none;
-      position: relative; transition: color .25s;
+      font-size:.72rem; font-weight:500; letter-spacing:.18em; text-transform:uppercase;
+      color:var(--ink-mid); text-decoration:none; position:relative; transition:color .25s;
     }
-    .nav-links a::after {
-      content:''; position:absolute; bottom:-4px; left:0; width:0; height:1.5px;
-      background: var(--gold); transition: width .3s ease;
-    }
-    .nav-links a:hover { color: var(--gold); }
+    .nav-links a::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:1px; background:var(--rose-mid); transition:width .3s; }
+    .nav-links a:hover { color:var(--rose); }
     .nav-links a:hover::after { width:100%; }
 
-    /* ─── HERO ────────────────────────────────── */
+    /* ── HERO ── */
     #hero {
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      padding: 130px 64px 90px;
-      position: relative; overflow: hidden;
-      background: var(--white);
+      min-height:100vh;
+      display:flex; align-items:center; justify-content:center;
+      padding:140px 60px 100px;
+      position:relative; overflow:hidden;
     }
-    .hero-blob {
-      position: absolute; border-radius: 50%;
-      filter: blur(80px); pointer-events: none;
+    /* layered background: soft gradient with bloom */
+    #hero::before {
+      content:''; position:absolute; inset:0; z-index:0;
+      background:
+        radial-gradient(ellipse 70% 60% at 80% 20%, rgba(201,104,128,.1) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 15% 80%, rgba(184,150,62,.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(155,143,189,.06) 0%, transparent 70%),
+        var(--white);
     }
-    .hero-blob.b1 { width:500px;height:500px;background:rgba(212,120,142,0.13);top:-140px;right:-140px;animation:blob1 11s ease-in-out infinite; }
-    .hero-blob.b2 { width:380px;height:380px;background:rgba(184,150,62,0.10);bottom:-100px;left:-80px;animation:blob1 13s ease-in-out infinite reverse; }
-    @keyframes blob1 { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-28px) scale(1.06)} }
+    /* large decorative circle */
+    .hero-ring {
+      position:absolute; z-index:0;
+      width:520px; height:520px; border-radius:50%;
+      border:1px solid rgba(201,104,128,.12);
+      top:50%; left:50%; transform:translate(-50%,-50%);
+      animation:spin 28s linear infinite;
+    }
+    .hero-ring::after {
+      content:''; position:absolute; inset:28px; border-radius:50%;
+      border:1px solid rgba(184,150,62,.1);
+      animation:spin 18s linear infinite reverse;
+    }
+    @keyframes spin { to { transform:translate(-50%,-50%) rotate(360deg); } }
 
-    /* petals */
-    .petal { position:fixed;border-radius:60% 40% 60% 40%;pointer-events:none;z-index:1;opacity:0;animation:fall linear infinite; }
-    @keyframes fall { 0%{opacity:0;transform:translateY(-10px) rotate(0deg)} 8%{opacity:.5} 92%{opacity:.2} 100%{opacity:0;transform:translateY(105vh) rotate(540deg)} }
+    .hero-inner { position:relative; z-index:2; text-align:center; max-width:820px; }
 
-    .hero-inner { position:relative;z-index:2;text-align:center;max-width:860px; }
-
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--gold); border: 1.5px solid var(--gold-pale);
-      padding: 7px 22px; border-radius: 100px; margin-bottom: 36px;
-      background: rgba(240,220,168,0.2);
-      animation: up .7s ease both;
+    .hero-tag {
+      display:inline-flex; align-items:center; gap:9px;
+      font-family:'Pretendard',sans-serif;
+      font-size:.68rem; font-weight:500; letter-spacing:.22em; text-transform:uppercase;
+      color:var(--rose); border:1px solid rgba(201,104,128,.3);
+      padding:6px 20px; border-radius:100px; margin-bottom:40px;
+      background:rgba(253,240,244,.6);
+      animation:up .8s ease both;
     }
 
     h1.name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(5rem, 12vw, 11rem);
-      font-weight: 600; line-height: .88; letter-spacing: -.01em;
-      margin-bottom: 32px;
-      animation: up .7s .12s ease both;
+      font-family:'Cormorant Garamond',serif;
+      font-size: clamp(5.5rem,13vw,12rem);
+      font-weight:300; line-height:.85; letter-spacing:-.02em;
+      margin-bottom:36px;
+      animation:up .8s .1s ease both;
     }
-    h1.name .g { color: var(--gold); font-style: italic; }
-    h1.name .p { color: var(--pink); }
+    h1.name .r { color:var(--rose); font-style:italic; font-weight:400; }
+    h1.name .g { color:var(--gold); }
 
     .hero-copy {
-      font-size: clamp(1.05rem, 1.9vw, 1.25rem);
-      font-weight: 400; line-height: 2.3;
-      color: var(--ink-mid);
-      max-width: 500px; margin: 0 auto 56px;
-      animation: up .7s .25s ease both;
-      word-break: keep-all;
-      letter-spacing: 0.04em;
+      font-size:clamp(1rem,1.8vw,1.18rem);
+      font-weight:400; line-height:2.5; color:var(--ink-mid);
+      max-width:500px; margin:0 auto 60px;
+      letter-spacing:.04em; word-break:keep-all;
+      animation:up .8s .22s ease both;
     }
-    .hero-copy strong { color: var(--ink); font-weight: 700; }
+    .hero-copy strong { color:var(--ink); font-weight:700; }
 
     .scroll-hint {
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-      animation: up .7s .4s ease both;
-      font-size: 0.65rem; letter-spacing: .22em; text-transform: uppercase;
-      color: var(--ink-soft);
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      animation:up .8s .38s ease both;
+      font-family:'Pretendard',sans-serif;
+      font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft);
     }
-    .scroll-hint .line { width:1px;height:52px;background:linear-gradient(to bottom,var(--gold-light),transparent);animation:pulse 2s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+    .scroll-line { width:1px; height:48px; background:linear-gradient(to bottom,var(--rose-mid),transparent); animation:pulse 2.2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:.9} }
+    @keyframes up { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
 
-    @keyframes up { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    /* ── SECTION SHARED ── */
+    .sec { padding:110px 60px; position:relative; }
+    .sec-inner { max-width:1060px; margin:0 auto; }
 
-    /* ─── SECTION COMMON ─────────────────────── */
-    .sec { padding: 110px 64px; position: relative; }
-    .sec-inner { max-width: 1080px; margin: 0 auto; }
-
-    .sec-label {
-      display: flex; align-items: center; gap: 12px;
-      font-size: 0.68rem; font-weight: 500; letter-spacing: .28em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 12px;
+    .sec-eyebrow {
+      display:flex; align-items:center; gap:11px;
+      font-family:'Pretendard',sans-serif;
+      font-size:.66rem; font-weight:500; letter-spacing:.28em; text-transform:uppercase;
+      color:var(--rose-mid); margin-bottom:10px;
     }
-    .sec-label::before { content:''; width:24px; height:1.5px; background: var(--gold-light); }
+    .sec-eyebrow::before { content:''; width:20px; height:1px; background:var(--rose-mid); }
 
     h2.sec-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.4rem, 5vw, 4rem);
-      font-weight: 600; line-height: 1.05; color: var(--ink);
-      margin-bottom: 56px;
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.4rem,5vw,4rem); font-weight:400; font-style:italic;
+      line-height:1.05; color:var(--ink); margin-bottom:52px;
     }
 
-    /* ─── ABOUT ───────────────────────────────── */
-    #about { background: var(--cream); }
-    #about::before { content:''; position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(to right,transparent,var(--gold-pale),transparent); }
+    /* ── ABOUT ── */
+    #about { background:var(--cream); }
+    #about::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right,transparent,rgba(201,104,128,.2),transparent); }
 
     .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:start; }
 
     .about-text p {
-      font-size: 1.05rem; font-weight: 400; line-height: 2.3;
-      color: var(--ink-mid); margin-bottom: 28px;
-      word-break: keep-all;
-      letter-spacing: 0.04em;
+      font-size:1.04rem; line-height:2.5; color:var(--ink-mid);
+      margin-bottom:24px; word-break:keep-all; letter-spacing:.04em;
     }
-    .about-text p:last-child { margin-bottom: 0; }
-    .about-text p strong { color: var(--ink); font-weight: 700; }
+    .about-text p:last-child { margin-bottom:0; }
+    .about-text strong { color:var(--ink); font-weight:700; }
 
-    .cards { display:flex; flex-direction:column; gap:16px; }
+    .cards { display:flex; flex-direction:column; gap:14px; }
     .card {
-      background: var(--white); border: 1.5px solid var(--border);
-      border-radius: 14px; padding: 24px 28px;
-      position: relative; overflow: hidden;
-      transition: transform .3s, box-shadow .3s;
+      background:var(--white); border:1px solid var(--border);
+      border-radius:14px; padding:22px 26px;
+      position:relative; overflow:hidden;
+      transition:transform .3s, box-shadow .3s;
     }
-    .card::before { content:''; position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--gold),var(--pink)); pointer-events:none; }
-    .card:hover { transform: translateX(6px); box-shadow: -4px 8px 24px rgba(184,150,62,.1); }
-    .card-icon { font-size:1.3rem; margin-bottom:8px; }
-    .card-title { font-size:.95rem; font-weight:700; color:var(--ink); margin-bottom:3px; }
-    .card-sub   { font-size:.85rem; font-weight:400; color:var(--ink-soft); }
+    .card::before { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:linear-gradient(to bottom,var(--rose),var(--gold)); }
+    .card:hover { transform:translateX(5px); box-shadow:-3px 8px 22px rgba(201,104,128,.1); }
+    .card-icon { font-size:1.25rem; margin-bottom:7px; }
+    .card-title { font-size:.92rem; font-weight:700; color:var(--ink); margin-bottom:3px; }
+    .card-sub   { font-size:.82rem; color:var(--ink-soft); }
 
-    /* ─── PROJECTS ────────────────────────────── */
-    #projects { background: var(--white); }
+    /* ── PROJECTS ── */
+    #projects { background:var(--white); }
 
-    .proj-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px; }
+    .proj-feature {
+      border:1px solid rgba(201,104,128,.25);
+      border-radius:22px; padding:48px 48px 42px;
+      background:linear-gradient(135deg,rgba(253,240,244,.8) 0%,var(--white) 60%);
+      position:relative; overflow:hidden; margin-bottom:26px;
+      transition:transform .35s, box-shadow .35s;
+    }
+    .proj-feature:hover { transform:translateY(-5px); box-shadow:0 22px 52px rgba(201,104,128,.13); }
+    .feat-badge {
+      position:absolute; top:22px; right:26px;
+      font-family:'Pretendard',sans-serif;
+      font-size:.58rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+      color:var(--rose); border:1px solid rgba(201,104,128,.3);
+      padding:4px 12px; border-radius:100px; background:rgba(253,240,244,.9);
+    }
+    .proj-num-feat { font-family:'Cormorant Garamond',serif; font-size:5rem; font-weight:300; color:rgba(201,104,128,.15); line-height:1; margin-bottom:10px; }
+    .proj-title-feat { font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:400; font-style:italic; color:var(--ink); margin-bottom:8px; }
+    .proj-role { font-size:.75rem; font-weight:500; letter-spacing:.12em; color:var(--rose); margin-bottom:16px; font-family:'Pretendard',sans-serif; }
+    .proj-desc-feat { font-size:.92rem; line-height:2; color:var(--ink-mid); margin-bottom:22px; max-width:680px; word-break:keep-all; }
 
+    .proj-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:22px; }
     .proj-card {
-      border: 1.5px solid var(--border); border-radius: 18px;
-      padding: 36px 32px; background: var(--white);
-      position: relative; overflow: hidden;
-      transition: transform .35s cubic-bezier(.25,.46,.45,.94), box-shadow .35s;
+      border:1px solid var(--border); border-radius:18px;
+      padding:34px 30px; background:var(--white);
+      position:relative; overflow:hidden;
+      transition:transform .35s, box-shadow .35s;
     }
-    .proj-card::after { content:''; position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,120,142,.06),rgba(184,150,62,.04));opacity:0;transition:opacity .35s; pointer-events:none; }
-    .proj-card:hover { transform:translateY(-7px); box-shadow:0 20px 52px rgba(184,150,62,.13); }
-    .proj-card:hover::after { opacity:1; }
+    .proj-card:hover { transform:translateY(-6px); box-shadow:0 18px 44px rgba(184,150,62,.11); }
+    .proj-num  { font-family:'Cormorant Garamond',serif; font-size:3.4rem; font-weight:300; color:var(--gold-pale); line-height:1; margin-bottom:14px; }
+    .proj-title{ font-family:'Cormorant Garamond',serif; font-size:1.65rem; font-weight:400; font-style:italic; color:var(--ink); margin-bottom:10px; }
+    .proj-desc { font-size:.86rem; line-height:1.9; color:var(--ink-mid); margin-bottom:18px; word-break:keep-all; }
 
-    .proj-num {
-      font-family:'Cormorant Garamond',serif; font-size:3.6rem; font-weight:600;
-      color: var(--gold-pale); line-height:1; margin-bottom:16px;
+    .tags { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:22px; }
+    .tag { font-family:'Pretendard',sans-serif; font-size:.62rem; font-weight:500; letter-spacing:.06em; padding:4px 11px; border-radius:100px; }
+    .tag-rose { background:var(--rose-pale); color:var(--rose); border:1px solid rgba(201,104,128,.22); }
+    .tag-gold { background:var(--gold-bg); color:var(--gold); border:1px solid rgba(184,150,62,.22); }
+
+    .proj-links { display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+    .proj-link { display:inline-flex; align-items:center; gap:6px; font-family:'Pretendard',sans-serif; font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; transition:gap .25s; }
+    .proj-link.rose { color:var(--rose); }
+    .proj-link.gold { color:var(--gold); }
+    .proj-link.ghost { color:var(--ink-soft); font-weight:400; font-size:.7rem; text-transform:none; letter-spacing:.04em; }
+    .proj-link:hover { gap:11px; }
+    .proj-wip { font-size:.74rem; color:var(--ink-soft); font-style:italic; }
+
+    /* ── SKILLS ── */
+    #skills { background:var(--rose-pale); }
+    #skills::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right,transparent,rgba(201,104,128,.3),transparent); }
+
+    .skills-note {
+      font-size:1rem; line-height:2.3; color:var(--ink-mid);
+      max-width:620px; margin-bottom:48px; word-break:keep-all;
     }
-    .proj-title { font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-weight:600; color:var(--ink); margin-bottom:10px; }
-    .proj-desc  { font-size:.88rem; font-weight:400; line-height:1.85; color:var(--ink-mid); margin-bottom:20px; word-break:keep-all; }
+    .skills-note strong { color:var(--ink); font-weight:700; }
 
-    .tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:24px; }
-    .tag { font-size:.66rem; font-weight:500; letter-spacing:.08em; padding:4px 12px; border-radius:100px; }
-    .tag-pink { background:var(--pink-pale); color:var(--pink); border:1px solid rgba(212,120,142,.25); }
-    .tag-gold { background:var(--gold-bg); color:var(--gold); border:1px solid rgba(184,150,62,.25); }
+    .skill-section-title {
+      font-family:'Pretendard',sans-serif;
+      font-size:.66rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
+      color:var(--ink-soft); margin-bottom:14px;
+    }
 
-    .proj-link { display:inline-flex;align-items:center;gap:7px;font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:gap .25s; }
-    .proj-link:hover { gap:13px; }
-    .proj-wip { font-size:.75rem; font-weight:400; color:var(--ink-soft); font-style:italic; }
-
-    /* ─── SKILLS ──────────────────────────────── */
-    #skills { background: var(--pink-pale); }
-    #skills::before { content:''; position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(to right,transparent,rgba(212,120,142,.4),transparent); }
-
-    .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; }
-
+    .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:13px; margin-bottom:32px; }
     .skill {
-      background:var(--white); border:1.5px solid rgba(212,120,142,.2);
-      border-radius:14px; padding:26px 20px; text-align:center;
+      background:var(--white); border:1px solid rgba(201,104,128,.18);
+      border-radius:14px; padding:22px 18px; text-align:center;
       transition:transform .28s, box-shadow .28s;
     }
-    .skill:hover { transform:translateY(-4px); box-shadow:0 10px 28px rgba(212,120,142,.14); }
-    .skill-icon { font-size:1.8rem; margin-bottom:10px; }
-    .skill-name { font-size:.92rem; font-weight:700; color:var(--ink); margin-bottom:4px; }
-    .skill-desc { font-size:.76rem; font-weight:400; color:var(--ink-soft); line-height:1.5; }
+    .skill.dim { opacity:.7; border-style:dashed; }
+    .skill:hover { transform:translateY(-4px); box-shadow:0 9px 24px rgba(201,104,128,.12); }
+    .skill-badge { display:inline-block; font-family:'Pretendard',sans-serif; font-size:.56rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:2px 9px; border-radius:100px; margin-bottom:9px; }
+    .badge-core  { background:var(--rose-pale); color:var(--rose); }
+    .badge-cert  { background:rgba(155,143,189,.15); color:var(--lilac); }
+    .badge-learn { background:var(--gold-bg); color:var(--gold); }
+    .skill-icon { font-size:1.7rem; margin-bottom:9px; }
+    .skill-name { font-size:.9rem; font-weight:700; color:var(--ink); margin-bottom:4px; }
+    .skill-desc { font-size:.74rem; color:var(--ink-soft); line-height:1.55; }
 
-    /* ─── CONTACT ─────────────────────────────── */
-    #contact { background: var(--ink); }
-    .contact-inner { max-width:640px; margin:0 auto; text-align:center; }
-    #contact .sec-label { color:var(--gold-light); justify-content:center; }
-    #contact .sec-label::before { display:none; }
-    #contact h2.sec-title { color:var(--white); margin-bottom:16px; }
-    .contact-sub { font-size:1rem; font-weight:400; line-height:1.95; color:rgba(255,253,248,.55); margin-bottom:48px; word-break:keep-all; }
-    .contact-btns { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
-    .btn {
-      display:inline-flex; align-items:center; gap:9px;
-      padding:13px 30px; border-radius:100px;
-      font-size:.78rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
-      text-decoration:none; transition:transform .28s, box-shadow .28s;
+    .phil {
+      margin-top:8px; background:var(--white);
+      border:1px solid var(--border); border-radius:18px; padding:36px 40px;
+      position:relative; overflow:hidden;
     }
-    .btn-gold { background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--ink); }
-    .btn-ghost { background:transparent; color:var(--white); border:1.5px solid rgba(255,253,248,.22); }
-    .btn:hover { transform:translateY(-3px); box-shadow:0 10px 28px rgba(184,150,62,.3); }
+    .phil::before { content:''; position:absolute; top:0; left:0; width:100%; height:3px; background:linear-gradient(to right,var(--rose),var(--gold),var(--lilac)); }
+    .phil-title { font-family:'Cormorant Garamond',serif; font-size:1.55rem; font-weight:300; font-style:italic; color:var(--rose); margin-bottom:14px; }
+    .phil-body  { font-size:.91rem; line-height:2.25; color:var(--ink-mid); word-break:keep-all; }
+    .phil-body strong { color:var(--ink); font-weight:700; }
 
-    /* ─── FOOTER ──────────────────────────────── */
-    footer { background:var(--ink); color:rgba(255,253,248,.25); text-align:center; padding:24px; font-size:.72rem; letter-spacing:.1em; border-top:1px solid rgba(255,253,248,.07); }
-    footer span { color:var(--gold-light); }
+    /* ── CONTACT ── */
+    #contact { background:var(--ink); }
+    .contact-inner { max-width:580px; margin:0 auto; text-align:center; }
+    #contact .sec-eyebrow { color:rgba(201,104,128,.65); justify-content:center; }
+    #contact .sec-eyebrow::before { display:none; }
+    #contact h2.sec-title { color:var(--white); margin-bottom:14px; }
+    .contact-sub { font-size:.98rem; line-height:2; color:rgba(255,253,248,.45); margin-bottom:44px; word-break:keep-all; }
+    .btns { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:12px 28px; border-radius:100px; font-family:'Pretendard',sans-serif; font-size:.74rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; transition:transform .28s, box-shadow .28s; }
+    .btn-rose  { background:linear-gradient(135deg,var(--rose),var(--rose-mid)); color:var(--white); }
+    .btn-ghost { background:transparent; color:var(--white); border:1px solid rgba(255,253,248,.2); }
+    .btn:hover { transform:translateY(-3px); box-shadow:0 10px 26px rgba(201,104,128,.3); }
 
-    /* ─── REVEAL ──────────────────────────────── */
-    .reveal { opacity:1; transform:none; transition:opacity .75s ease, transform .75s cubic-bezier(.25,.46,.45,.94); }
-    .reveal.ready { opacity:0; transform:translateY(36px); }
-    .reveal.ready.on { opacity:1; transform:none; }
+    footer { background:var(--ink); color:rgba(255,253,248,.2); text-align:center; padding:22px; font-size:.68rem; letter-spacing:.1em; border-top:1px solid rgba(255,253,248,.06); }
+    footer span { color:var(--rose-mid); }
 
-    /* ─── RESPONSIVE ──────────────────────────── */
-    @media(max-width:768px) {
-      nav { padding:18px 22px; }
-      .nav-links { gap:18px; }
+    /* reveal */
+    .reveal { transition:opacity .75s ease, transform .75s cubic-bezier(.25,.46,.45,.94); }
+    .reveal.ready { opacity:0; transform:translateY(32px); }
+    .reveal.ready.on { opacity:1; transform:translateY(0); }
+
+    @media(max-width:768px){
+      nav { padding:17px 20px; }
+      .nav-links { gap:16px; }
       .sec { padding:80px 22px; }
-      #hero { padding:110px 22px 70px; }
-      .about-grid { grid-template-columns:1fr; gap:40px; }
+      #hero { padding:115px 22px 70px; }
+      .about-grid { grid-template-columns:1fr; gap:38px; }
+      .proj-feature { padding:28px 22px 26px; }
+      .proj-title-feat { font-size:1.9rem; }
       .proj-grid { grid-template-columns:1fr; }
+      .phil { padding:26px 22px; }
     }
   </style>
 </head>
@@ -277,18 +329,20 @@
 
   <!-- HERO -->
   <section id="hero">
-    <div class="hero-blob b1"></div>
-    <div class="hero-blob b2"></div>
+    <div class="hero-ring"></div>
     <div class="hero-inner">
-      <div class="hero-eyebrow">✦ AI Designer &amp; Planner</div>
-      <h1 class="name"><span class="g">Flo</span><span class="p">wen</span></h1>
+      <div class="hero-tag">✦ AI Designer &amp; Builder</div>
+      <h1 class="name">
+        <span class="r">Flo</span><span class="g">wen</span>
+      </h1>
       <p class="hero-copy">
-        비전공자에서 <strong>AI 서비스를 직접 설계</strong>하기까지.<br>
-        기술과 사람 사이의 다리를 만들고,<br>
-        꽃처럼 피어나는 흐름을 그립니다.
+        AI와 사람 사이의 <strong>다리를 만들고,</strong><br>
+        꽃처럼 피어나는 흐름을 그립니다.<br>
+        복잡한 것을 <strong>단순하고 아름답게</strong><br>
+        기획하는 일을 좋아해요.
       </p>
       <div class="scroll-hint">
-        <div class="line"></div>
+        <div class="scroll-line"></div>
         scroll
       </div>
     </div>
@@ -298,28 +352,41 @@
   <section id="about" class="sec">
     <div class="sec-inner about-grid">
       <div class="reveal">
-        <div class="sec-label">About me</div>
+        <div class="sec-eyebrow">About me</div>
         <h2 class="sec-title">나에 대해</h2>
         <div class="about-text">
-        <p>비전공자로 AI 분야에 뛰어들어,<br>
-        현재 <strong>부트캠프에서 집중 학습</strong> 중입니다.<br>
-        수업에서 배운 개념을 바로 실제 프로젝트로<br>
-        연결하는 것을 즐깁니다.</p>
-        <p>기술 그 자체보다,<br>
-        그 기술이 <strong>사람에게 어떻게 닿는지</strong>에 관심이 많습니다.<br>
-        복잡한 것을 단순하고 아름답게 기획하는 일을 좋아해요.</p>
+          <p>
+            고려대학교 경제학을 기반으로,<br>
+            <strong>Microsoft AI School을 수료</strong>하며<br>
+            AI 서비스 기획과 개발을 직접 경험했습니다.
+          </p>
+          <p>
+            단순히 기술을 배우는 것을 넘어,<br>
+            <strong>나만의 이야기가 담긴 독자적인 AI 세계</strong>를<br>
+            직접 설계하고 만들어가는 것을 목표로 합니다.
+          </p>
+          <p>
+            사람과 AI가 만나는 방식 자체를<br>
+            새롭게 디자인하는 것이 목표입니다.<br>
+            <strong>단어와 의미 너머, 데이터 이상의 AI</strong>를 지향합니다.
+          </p>
         </div>
       </div>
       <div class="cards reveal" style="transition-delay:.12s">
         <div class="card">
-          <div class="card-icon">🌿</div>
-          <div class="card-title">Microsoft AI School 9기</div>
-          <div class="card-sub">부트캠프에서 AI 및 ML 서비스 개발 학습</div>
+          <div class="card-icon">🎓</div>
+          <div class="card-title">Korea University</div>
+          <div class="card-sub">경제학 학부 졸업</div>
         </div>
         <div class="card">
-          <div class="card-icon">⚡</div>
-          <div class="card-title">Korea University Economics</div>
-          <div class="card-sub">고려대학교 경제학 학부 졸업</div>
+          <div class="card-icon">🌿</div>
+          <div class="card-title">Microsoft AI School 9기 수료</div>
+          <div class="card-sub">Microsoft Azure ML · AI Agent · Cloud 서비스</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">📜</div>
+          <div class="card-title">Microsoft AI-900 취득</div>
+          <div class="card-sub">Azure AI Fundamentals 공인 자격증</div>
         </div>
         <div class="card">
           <div class="card-icon">🌱</div>
@@ -333,55 +400,87 @@
   <!-- PROJECTS -->
   <section id="projects" class="sec">
     <div class="sec-inner">
-      <div class="sec-label reveal">Projects</div>
+      <div class="sec-eyebrow reveal">Projects</div>
       <h2 class="sec-title reveal">직접 만든 것들</h2>
+
+      <!-- MAIN: Body ML Collector -->
+      <div class="proj-feature reveal">
+        <span class="feat-badge">FEATURED</span>
+        <div class="proj-num-feat">01</div>
+        <h3 class="proj-title-feat">Body ML Collector</h3>
+        <p class="proj-role">✦ Personal Project — 기획 · 설계 · 구현 전 과정</p>
+        <p class="proj-desc-feat">
+          Privacy-Protected Architecture 기반 신체 데이터 수집 도구.<br>
+          MediaPipe로 실시간 포즈 추정 후 서버 전송 없이 로컬에서 처리하는 구조로,
+          ML 학습용 체형 데이터를 프라이버시를 보호하며 수집합니다.<br>
+          기획부터 구현, PRD 작성, 배포까지 혼자 진행한 개인 프로젝트입니다.
+        </p>
+        <div class="tags">
+          <span class="tag tag-rose">MediaPipe</span>
+          <span class="tag tag-gold">OpenCV</span>
+          <span class="tag tag-rose">Azure ML</span>
+          <span class="tag tag-gold">Privacy Architecture</span>
+          <span class="tag tag-rose">GitHub Pages</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://jihyun-kr.github.io/BodyMLCollector/" class="proj-link rose" target="_blank">Live Demo →</a>
+          <a href="https://jihyun-kr.github.io/Project1/" class="proj-link ghost" target="_blank">PRD →</a>
+        </div>
+      </div>
+
       <div class="proj-grid">
         <div class="proj-card reveal">
-          <div class="proj-num">01</div>
-          <h3 class="proj-title">Body ML Collector</h3>
-          <p class="proj-desc">Privacy-Protected Architecture 기반 신체 데이터 수집 도구. MediaPipe와 Azure ML을 활용해 프라이버시를 보호하는 ML 데이터를 수집합니다.</p>
-          <div class="tags">
-            <span class="tag tag-gold">MediaPipe</span>
-            <span class="tag tag-pink">OpenCV</span>
-            <span class="tag tag-gold">Github Pages</span>
-            <span class="tag tag-pink">Privacy Architecture</span>
-          </div>
-          <a href="https://jihyun-kr.github.io/BodyMLCollector/" class="proj-link" target="_blank">Live Demo →</a>
-          &nbsp;&nbsp;
-          <a href="https://github.com/Jihyun-KR/BodyMLCollector" class="proj-link" style="font-size:0.72rem;opacity:0.6;" target="_blank">GitHub →</a>
-        </div>
-        <div class="proj-card reveal" style="transition-delay:.1s">
           <div class="proj-num">02</div>
-          <h3 class="proj-title">체형 분석 패션 추천 AI</h3>
-          <p class="proj-desc">Body ML Collector를 활용한 체형 분석 기반 패션 추천 서비스. AI가 체형을 분석하고 개인화된 스타일을 제안합니다.</p>
+          <h3 class="proj-title">AI Stock Chart Classifier</h3>
+	  <p class="proj-role" style="font-size:.74rem;color:var(--rose);margin-bottom:10px;font-family:'Pretendard',sans-serif;letter-spacing:.08em;">✦ Personal Project — 아키텍처 · 모델 설계 · 구현 전 과정</p>
+          <p class="proj-desc">
+            주식 차트의 시각 패턴을 AI가 어떻게 인식하는지 탐구한 프로젝트.
+            수익률 예측보다 <em style="color:var(--rose);font-style:normal">패턴 분류 자체</em>에 집중하며,
+            이미지 분류 모델을 처음 직접 설계한 시도입니다.
+          </p>
           <div class="tags">
             <span class="tag tag-gold">Azure ML</span>
-            <span class="tag tag-pink">AI Services</span>
+            <span class="tag tag-rose">Python</span>
+            <span class="tag tag-gold">Image Classification</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://jihyun-kr.github.io/Stock-Chart-Selection-Model/" class="proj-link gold" target="_blank">GitHub →</a>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" style="transition-delay:.1s">
+          <div class="proj-num">03</div>
+          <h3 class="proj-title">이사 AI Agent 앱</h3>
+          <p class="proj-role" style="font-size:.74rem;color:var(--rose);margin-bottom:10px;font-family:'Pretendard',sans-serif;letter-spacing:.08em;">✦ Team Project — 검색 인덱스 설계 · 시연 영상 기획, 촬영, 편집</p>
+          <p class="proj-desc">
+            이사 준비 전 과정을 AI가 동행하는 챗봇 서비스.
+            Azure AI Search 인덱스 설계와 서비스 시연 영상 기획, 촬영, 편집을 담당했습니다.
+            Azure OpenAI + RAG 기반 팀 프로젝트입니다.
+          </p>
+          <div class="tags">
+            <span class="tag tag-rose">Azure AI Search</span>
+            <span class="tag tag-gold">Index Design</span>
+            <span class="tag tag-rose">Azure OpenAI</span>
+            <span class="tag tag-gold">RAG</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/Jihyun-KR/ISAISANGMU" class="proj-link gold" target="_blank">GitHub →</a>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" style="transition-delay:.2s">
+          <div class="proj-num">04</div>
+          <h3 class="proj-title">체형 분석 패션 AI</h3>
+          <p class="proj-desc">
+            Body ML Collector 데이터를 기반으로
+            AI가 개인 체형에 맞는 스타일을 제안하는 서비스.
+            데이터 수집부터 추천까지 이어지는 흐름을 설계 중입니다.
+          </p>
+          <div class="tags">
+            <span class="tag tag-gold">Azure ML</span>
+            <span class="tag tag-rose">SaaS</span>
           </div>
           <span class="proj-wip">✦ 제작 중</span>
-        </div>
-        <div class="proj-card reveal" style="transition-delay:.2s">
-          <div class="proj-num">03</div>
-          <h3 class="proj-title">이사 AI Agent Chatbot</h3>
-          <p class="proj-desc">이사 준비물 맞춤형 체크리스트 생성. 이사 과정에서 놓치기 쉬운 법적 절차와 계약서 위험 요소를 Azure RAG 기반 AI가 실시간으로 안내해주는 모바일 챗봇 서비스 </p>
-          <div class="tags">
-            <span class="tag tag-gold">Azure OpenAI</span>
-            <span class="tag tag-pink">Azure AI Search</span></div>
-          <a href="https://jihyun-kr.github.io/isa-isangmu/" class="proj-link" target="_blank">Github →</a>
-        </div>
-        <div class="proj-card reveal" style="transition-delay:.3s">
-          <div class="proj-num">04</div>
-          <h3 class="proj-title">Coming Soon</h3>
-          <p class="proj-desc">새로운 프로젝트가 피어나는 중입니다. 기술과 기획이 만나는 자리를 기대해 주세요.</p>
-          <div class="tags"><span class="tag tag-pink">준비 중</span></div>
-          <span class="proj-wip">✦ 기획 중</span>
-        </div>
-        <div class="proj-card reveal" style="transition-delay:.4s">
-          <div class="proj-num">05</div>
-          <h3 class="proj-title">Coming Soon</h3>
-          <p class="proj-desc">새로운 프로젝트가 피어나는 중입니다. 기술과 기획이 만나는 자리를 기대해 주세요.</p>
-          <div class="tags"><span class="tag tag-pink">준비 중</span></div>
-          <span class="proj-wip">✦ 기획 중</span>
         </div>
       </div>
     </div>
@@ -390,54 +489,123 @@
   <!-- SKILLS -->
   <section id="skills" class="sec">
     <div class="sec-inner">
-      <div class="sec-label reveal">Skills</div>
+      <div class="sec-eyebrow reveal">Skills</div>
       <h2 class="sec-title reveal">할 수 있는 것들</h2>
-      <div class="skills-grid">
-        <div class="skill reveal"><div class="skill-icon">🐍</div><div class="skill-name">Python</div><div class="skill-desc">데이터 전처리</div></div>
-        <div class="skill reveal" style="transition-delay:.07s"><div class="skill-icon">🌐</div><div class="skill-name">HTML / JS</div><div class="skill-desc">노코드 툴 제작</div></div>
-        <div class="skill reveal" style="transition-delay:.14s"><div class="skill-icon">🐱</div><div class="skill-name">GitHub</div><div class="skill-desc">버전 관리 · 포트폴리오</div></div>
-        <div class="skill reveal" style="transition-delay:.21s"><div class="skill-icon">☁️</div><div class="skill-name">Azure ML</div><div class="skill-desc">Pipeline Design</div></div>
-        <div class="skill reveal" style="transition-delay:.28s"><div class="skill-icon">🌸</div><div class="skill-name">서비스 기획</div><div class="skill-desc">사용자 중심 설계</div></div>
-        <div class="skill reveal" style="transition-delay:.35s"><div class="skill-icon">✨</div><div class="skill-name">AI Prompt</div><div class="skill-desc">프롬프트 엔지니어링</div></div>
+
+      <p class="skills-note reveal">
+        저의 핵심 강점은 <strong>AI를 잘 쓰는 것</strong>입니다.<br>
+        순수 기술 개발보다, AI의 가능성을 극대화하는 방향을
+        설계하고 서비스로 연결하는 데 집중합니다.<br>
+        클라우드·ML 기술은 Microsoft AI School에서 배웠으며,<br>
+        <strong>AI와 연결하고 소통하는 힘</strong>이 제 무기입니다.
+      </p>
+
+      <p class="skill-section-title reveal">✦ 핵심 역량</p>
+<div class="skills-grid reveal">
+  <div class="skill">
+    <div class="skill-badge badge-core">CORE</div>
+    <div class="skill-icon">🤖</div>
+    <div class="skill-name">AI 활용 · 기획</div>
+    <div class="skill-desc">Prompt Engineering · LLM 활용 · AI 서비스 설계</div>
+  </div>
+  <div class="skill">
+    <div class="skill-badge badge-core">CORE</div>
+    <div class="skill-icon">📋</div>
+    <div class="skill-name">AI 서비스 기획</div>
+    <div class="skill-desc">PRD 작성 · 시연 영상 기획 · 사용자 흐름 설계</div>
+  </div>
+  <div class="skill">
+    <div class="skill-badge badge-core">CORE</div>
+    <div class="skill-icon">✦</div>
+    <div class="skill-name">아이디어 → 구현</div>
+    <div class="skill-desc">기획부터 배포까지 · 개인 프로젝트 End-to-End</div>
+  </div>
+</div>
+
+      <p class="skill-section-title reveal">✦ 자격증</p>
+      <div class="skills-grid reveal" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr));max-width:420px;">
+        <div class="skill">
+          <div class="skill-badge badge-cert">CERT</div>
+          <div class="skill-icon">📜</div>
+          <div class="skill-name">Microsoft AI-900</div>
+          <div class="skill-desc">Azure AI Fundamentals</div>
+        </div>
       </div>
+
+      <p class="skill-section-title reveal" style="margin-top:24px;">✦ 교육과정 이수 기술</p>
+      <div class="skills-grid reveal">
+        <div class="skill dim">
+          <div class="skill-badge badge-learn">LEARNED</div>
+          <div class="skill-icon">☁️</div>
+          <div class="skill-name">Microsoft Azure</div>
+          <div class="skill-desc">Azure ML · OpenAI · AI Search · 기본 Pipeline</div>
+        </div>
+        <div class="skill dim">
+          <div class="skill-badge badge-learn">LEARNED</div>
+          <div class="skill-icon">🐍</div>
+          <div class="skill-name">Python</div>
+          <div class="skill-desc">데이터 전처리 · ML 모델 기초</div>
+        </div>
+        <div class="skill dim">
+          <div class="skill-badge badge-learn">LEARNED</div>
+          <div class="skill-icon">🌐</div>
+          <div class="skill-name">HTML / Web</div>
+          <div class="skill-desc">포트폴리오 · 간단한 프론트엔드</div>
+        </div>
+      </div>
+
+      <div class="phil reveal" style="transition-delay:.28s">
+  <div class="phil-title">AI가 사람에게 닿는 방식</div>
+  <p class="phil-body">
+    저는 기술을 완성하는 개발자가 아니라,<br>
+    <strong>AI와 사람 사이의 흐름을 설계하는 사람</strong>입니다.<br><br>
+    아직 아무도 만들지 않은 세계를<br>
+    나만의 언어로 짓는 것이 목표입니다.
+  </p>
+</div>
     </div>
   </section>
 
   <!-- CONTACT -->
   <section id="contact" class="sec">
     <div class="contact-inner">
-      <div class="sec-label reveal">Contact</div>
+      <div class="sec-eyebrow reveal">Contact</div>
       <h2 class="sec-title reveal">같이 만들어요</h2>
       <p class="contact-sub reveal">새로운 프로젝트, 협업,<br>혹은 그냥 안녕이라도 — 언제든 환영합니다.</p>
-      <div class="contact-btns reveal">
-        <a href="https://github.com/Jihyun-KR" class="btn btn-gold" target="_blank">🐱 GitHub</a>
-        <a href="/cdn-cgi/l/email-protection#774f4042414e44433719160112055914181a" class="btn btn-ghost">✉ Email</a>
+      <div class="btns reveal">
+        <a href="https://github.com/Jihyun-KR" class="btn btn-rose" target="_blank">🐱 GitHub</a>
+        <a href="mailto:your@email.com" class="btn btn-ghost">✉ Email</a>
       </div>
     </div>
   </section>
 
-  <footer>flowen © 2025 &nbsp;·&nbsp; made with <span>💛</span></footer>
+  <footer>flowen © 2025 &nbsp;·&nbsp; made with <span>🌸</span></footer>
 
   <script>
-    // ── scroll reveal (progressive enhancement)
-    const revealEls = document.querySelectorAll('.reveal');
-    // JS 있을 때만 숨김 처리 → JS 없거나 느려도 항상 보임
-    revealEls.forEach(el => el.classList.add('ready'));
+    const els = document.querySelectorAll('.reveal');
+    els.forEach(el=>el.classList.add('ready'));
     const io = new IntersectionObserver(es=>{
       es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } });
-    },{threshold:0, rootMargin:'0px 0px -30px 0px'});
-    revealEls.forEach(el=>io.observe(el));
-    // 안전장치: 1.5초 후 강제 표시
-    setTimeout(()=>{ revealEls.forEach(el=>el.classList.add('on')); }, 1500);
+    },{threshold:0,rootMargin:'0px 0px -28px 0px'});
+    els.forEach(el=>io.observe(el));
+    setTimeout(()=>els.forEach(el=>el.classList.add('on')),1600);
 
-    // ── petals
-    const pc=['#F2A7B8','#E8C97A','#FADADD','#D4AE5A','#FCE4EC'];
-    for(let i=0;i<16;i++){
+    // petals
+    const colors=['#F2A7B8','#E8C97A','#D4B8E0','#FADADD','#D4AE5A'];
+    for(let i=0;i<18;i++){
       const p=document.createElement('div');
       p.className='petal';
       Object.assign(p.style,{
         left:Math.random()*100+'vw',
-        background:pc[Math.floor(Math.random()*pc.length)],
-        animationDuration:(10+Math.random()*14)+'s',
-        animationDelay:(Math.random()*20)+'s',
-        width:(5+Math.random()*7)+
+        background:colors[Math.floor(Math.random()*colors.length)],
+        animationDuration:(11+Math.random()*14)+'s',
+        animationDelay:(Math.random()*22)+'s',
+        width:(4+Math.random()*7)+'px',
+        height:(7+Math.random()*10)+'px',
+        top:'-15px'
+      });
+      document.body.appendChild(p);
+    }
+  </script>
+</body>
+</html>
