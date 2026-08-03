@@ -36,7 +36,6 @@
       overflow-x: hidden;
     }
 
-    /* ── AMBIENT PETALS ── */
     .petal {
       position: fixed; pointer-events: none; z-index: 0;
       border-radius: 60% 40% 55% 45%;
@@ -49,7 +48,6 @@
       100% { opacity:0; transform:translateY(106vh) rotate(600deg) scale(1.1); }
     }
 
-    /* ── NAV ── */
     nav {
       position: fixed; top:0; left:0; right:0; z-index: 300;
       display: flex; justify-content:space-between; align-items:center;
@@ -74,14 +72,12 @@
     .nav-links a:hover { color:var(--rose); }
     .nav-links a:hover::after { width:100%; }
 
-    /* ── HERO ── */
     #hero {
       min-height:100vh;
       display:flex; align-items:center; justify-content:center;
       padding:140px 60px 100px;
       position:relative; overflow:hidden;
     }
-    /* layered background: soft gradient with bloom */
     #hero::before {
       content:''; position:absolute; inset:0; z-index:0;
       background:
@@ -90,7 +86,6 @@
         radial-gradient(ellipse 40% 40% at 50% 50%, rgba(155,143,189,.06) 0%, transparent 70%),
         var(--white);
     }
-    /* large decorative circle */
     .hero-ring {
       position:absolute; z-index:0;
       width:520px; height:520px; border-radius:50%;
@@ -146,7 +141,6 @@
     @keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:.9} }
     @keyframes up { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
 
-    /* ── SECTION SHARED ── */
     .sec { padding:110px 60px; position:relative; }
     .sec-inner { max-width:1060px; margin:0 auto; }
 
@@ -164,7 +158,6 @@
       line-height:1.05; color:var(--ink); margin-bottom:52px;
     }
 
-    /* ── ABOUT ── */
     #about { background:var(--cream); }
     #about::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right,transparent,rgba(201,104,128,.2),transparent); }
 
@@ -190,7 +183,6 @@
     .card-title { font-size:.92rem; font-weight:700; color:var(--ink); margin-bottom:3px; }
     .card-sub   { font-size:.82rem; color:var(--ink-soft); }
 
-    /* ── PROJECTS ── */
     #projects { background:var(--white); }
 
     .proj-feature {
@@ -213,6 +205,16 @@
     .proj-role { font-size:.75rem; font-weight:500; letter-spacing:.12em; color:var(--rose); margin-bottom:16px; font-family:'Pretendard',sans-serif; }
     .proj-desc-feat { font-size:.92rem; line-height:2; color:var(--ink-mid); margin-bottom:22px; max-width:680px; word-break:keep-all; }
 
+    .proj-group-label {
+      font-family:'Pretendard',sans-serif;
+      font-size:.66rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
+      color:var(--ink-soft); margin:44px 0 18px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .proj-group-label:first-of-type { margin-top:0; }
+    .proj-group-label::after { content:''; flex:1; height:1px; background:var(--border); }
+    .proj-group-label.wip { color:var(--gold); }
+
     .proj-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:22px; }
     .proj-card {
       border:1px solid var(--border); border-radius:18px;
@@ -221,6 +223,7 @@
       transition:transform .35s, box-shadow .35s;
     }
     .proj-card:hover { transform:translateY(-6px); box-shadow:0 18px 44px rgba(184,150,62,.11); }
+    .proj-card.wip { border-style:dashed; opacity:.85; }
     .proj-num  { font-family:'Cormorant Garamond',serif; font-size:3.4rem; font-weight:300; color:var(--gold-pale); line-height:1; margin-bottom:14px; }
     .proj-title{ font-family:'Cormorant Garamond',serif; font-size:1.65rem; font-weight:400; font-style:italic; color:var(--ink); margin-bottom:10px; }
     .proj-desc { font-size:.86rem; line-height:1.9; color:var(--ink-mid); margin-bottom:18px; word-break:keep-all; }
@@ -238,7 +241,68 @@
     .proj-link:hover { gap:11px; }
     .proj-wip { font-size:.74rem; color:var(--ink-soft); font-style:italic; }
 
-    /* ── SKILLS ── */
+    /* ── CHANNELS (신규 별도 섹션) ── */
+    #channels { background:var(--cream); }
+    #channels::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right,transparent,rgba(184,150,62,.25),transparent); }
+
+    .channel-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:22px; }
+    .revenue-pill {
+      display:inline-flex; align-items:center; gap:8px;
+      font-family:'Pretendard',sans-serif; font-size:.78rem; font-weight:700; letter-spacing:.06em;
+      color:var(--gold); background:var(--gold-bg); border:1px solid rgba(184,150,62,.3);
+      padding:9px 20px; border-radius:100px; margin:-28px 0 40px;
+    }
+    .channel-card {
+      border:1px solid var(--border); border-radius:20px;
+      padding:38px 34px; background:var(--white);
+      position:relative; overflow:hidden;
+      transition:transform .35s, box-shadow .35s;
+    }
+    .channel-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:4px; }
+    .channel-card.yt::before { background:linear-gradient(to right,#FF0000,#FF5A5A); }
+    .channel-card.blog::before { background:linear-gradient(to right,var(--gold),var(--lilac)); }
+    .channel-card:hover { transform:translateY(-7px); }
+    .channel-card.yt:hover { box-shadow:0 20px 46px rgba(255,0,0,.14); }
+    .channel-card.blog:hover { box-shadow:0 20px 46px rgba(184,150,62,.16); }
+
+    .yt-badge {
+      width:56px; height:40px; border-radius:12px;
+      background:#FF0000; display:flex; align-items:center; justify-content:center;
+      margin-bottom:20px; box-shadow:0 6px 16px rgba(255,0,0,.28);
+    }
+    .yt-badge::after {
+      content:''; width:0; height:0;
+      border-top:9px solid transparent; border-bottom:9px solid transparent;
+      border-left:15px solid var(--white); margin-left:4px;
+    }
+
+    .blog-badge { display:flex; gap:8px; margin-bottom:20px; }
+    .blog-dot {
+      width:40px; height:40px; border-radius:12px;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Pretendard',sans-serif; font-weight:800; font-size:.95rem; color:var(--white);
+    }
+    .blog-dot.tistory { background:#FF5836; box-shadow:0 6px 16px rgba(255,88,54,.28); }
+    .blog-dot.wp      { background:#21759B; box-shadow:0 6px 16px rgba(33,117,155,.28); }
+    .channel-title { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:400; font-style:italic; color:var(--ink); margin-bottom:10px; }
+    .channel-desc { font-size:.86rem; line-height:1.9; color:var(--ink-mid); word-break:keep-all; margin-bottom:20px; }
+
+    .channel-metrics { display:flex; gap:10px; flex-wrap:wrap; }
+    .c-metric {
+      flex:1; min-width:110px;
+      background:var(--rose-pale); border:1px solid rgba(201,104,128,.2);
+      border-radius:12px; padding:14px 12px; text-align:center;
+    }
+    .c-metric-num { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:600; color:var(--rose); line-height:1.15; }
+    .c-metric-label { font-size:.66rem; color:var(--ink-soft); letter-spacing:.03em; font-family:'Pretendard',sans-serif; margin-top:3px; word-break:keep-all; }
+
+    .channel-note {
+      text-align:center; margin-top:28px;
+      font-family:'Pretendard',sans-serif; font-size:.78rem; letter-spacing:.04em;
+      color:var(--ink-soft);
+    }
+    .channel-note strong { color:var(--rose); font-weight:700; }
+
     #skills { background:var(--rose-pale); }
     #skills::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right,transparent,rgba(201,104,128,.3),transparent); }
 
@@ -280,7 +344,6 @@
     .phil-body  { font-size:.91rem; line-height:2.25; color:var(--ink-mid); word-break:keep-all; }
     .phil-body strong { color:var(--ink); font-weight:700; }
 
-    /* ── CONTACT ── */
     #contact { background:var(--ink); }
     .contact-inner { max-width:580px; margin:0 auto; text-align:center; }
     #contact .sec-eyebrow { color:rgba(201,104,128,.65); justify-content:center; }
@@ -296,7 +359,6 @@
     footer { background:var(--ink); color:rgba(255,253,248,.2); text-align:center; padding:22px; font-size:.68rem; letter-spacing:.1em; border-top:1px solid rgba(255,253,248,.06); }
     footer span { color:var(--rose-mid); }
 
-    /* reveal */
     .reveal { transition:opacity .75s ease, transform .75s cubic-bezier(.25,.46,.45,.94); }
     .reveal.ready { opacity:0; transform:translateY(32px); }
     .reveal.ready.on { opacity:1; transform:translateY(0); }
@@ -310,6 +372,7 @@
       .proj-feature { padding:28px 22px 26px; }
       .proj-title-feat { font-size:1.9rem; }
       .proj-grid { grid-template-columns:1fr; }
+      .channel-grid { grid-template-columns:1fr; }
       .phil { padding:26px 22px; }
     }
   </style>
@@ -322,6 +385,7 @@
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#channels">Channels</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -348,7 +412,7 @@
     </div>
   </section>
 
-  <!-- ABOUT -->
+  <!-- ABOUT (원본 문구 유지) -->
   <section id="about" class="sec">
     <div class="sec-inner about-grid">
       <div class="reveal">
@@ -397,11 +461,13 @@
     </div>
   </section>
 
-  <!-- PROJECTS -->
+  <!-- PROJECTS (완료 / 제작중 구분) -->
   <section id="projects" class="sec">
     <div class="sec-inner">
       <div class="sec-eyebrow reveal">Projects</div>
       <h2 class="sec-title reveal">직접 만든 것들</h2>
+
+      <div class="proj-group-label reveal">완료된 프로젝트</div>
 
       <!-- MAIN: Body ML Collector -->
       <div class="proj-feature reveal">
@@ -467,18 +533,27 @@
             <a href="https://github.com/Jihyun-KR/ISAISANGMU" class="proj-link gold" target="_blank">GitHub →</a>
           </div>
         </div>
+      </div>
 
-        <div class="proj-card reveal" style="transition-delay:.2s">
+      <div class="proj-group-label wip reveal">제작 중인 프로젝트</div>
+
+      <div class="proj-grid">
+        <div class="proj-card wip reveal">
           <div class="proj-num">04</div>
-          <h3 class="proj-title">체형 분석 패션 AI</h3>
+          <h3 class="proj-title" style="font-style:normal;letter-spacing:.02em;">IS THIS CODE OKAY</h3>
+          <p class="proj-role" style="font-size:.74rem;color:var(--rose);margin-bottom:10px;font-family:'Pretendard',sans-serif;letter-spacing:.08em;">✦ Personal Project — LangGraph 기반 코드 위험도 진단 도구</p>
           <p class="proj-desc">
-            Body ML Collector 데이터를 기반으로
-            AI가 개인 체형에 맞는 스타일을 제안하는 서비스.
-            데이터 수집부터 추천까지 이어지는 흐름을 설계 중입니다.
+            "AI가 짜준 이 코드, 그대로 배포해도 되는 걸까?"라는 질문에서 출발한 프로젝트.
+            코딩을 잘 모르는 1인 창업가·기획자가 AI(ChatGPT, Claude, Cursor 등)로 생성한 코드를
+            보안·확장성 관점에서 쉬운 말로 진단받을 수 있도록 돕는 LangGraph 기반 도구입니다.
           </p>
           <div class="tags">
-            <span class="tag tag-gold">Azure ML</span>
-            <span class="tag tag-rose">SaaS</span>
+            <span class="tag tag-gold">LangGraph</span>
+            <span class="tag tag-rose">Python</span>
+            <span class="tag tag-gold">Risk Diagnosis</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/Jihyun-KR/langgraph-study" class="proj-link gold" target="_blank">GitHub →</a>
           </div>
           <span class="proj-wip">✦ 제작 중</span>
         </div>
@@ -486,7 +561,63 @@
     </div>
   </section>
 
-  <!-- SKILLS -->
+  <!-- CHANNELS: 프로젝트와 별도 섹션 (내용은 직접 채워주세요) -->
+  <section id="channels" class="sec">
+    <div class="sec-inner">
+      <div class="sec-eyebrow reveal">Channels</div>
+      <h2 class="sec-title reveal">운영한 콘텐츠 채널</h2>
+      <div class="revenue-pill reveal">✦ 누적 수익 1만 5천 달러 이상</div>
+      <div class="channel-grid">
+        <div class="channel-card yt reveal">
+          <div class="yt-badge"></div>
+          <div class="channel-title">YouTube</div>
+          <div class="channel-desc">
+            중장년층·시니어 세대를 타겟으로 한 건강·라이프스타일 정보 콘텐츠를 기획해
+            콘텐츠 제작, 업로드, 성과 분석까지 전 과정을 운영했습니다.
+            타겟 오디언스의 관심사를 분석해 콘텐츠 포맷과 업로드 주기를 지속적으로 실험하며 채널을 키웠습니다.
+          </div>
+          <div class="channel-metrics">
+            <div class="c-metric">
+              <div class="c-metric-num">2만+</div>
+              <div class="c-metric-label">메인 채널 구독자</div>
+            </div>
+            <div class="c-metric">
+              <div class="c-metric-num">복수</div>
+              <div class="c-metric-label">서브 채널 동시 운영</div>
+            </div>
+          </div>
+        </div>
+        <div class="channel-card blog reveal" style="transition-delay:.1s">
+          <div class="blog-badge">
+            <div class="blog-dot tistory">T</div>
+            <div class="blog-dot wp">W</div>
+          </div>
+          <div class="channel-title">Blog</div>
+          <div class="channel-desc">
+            티스토리·워드프레스를 병행 운영하며 SEO 최적화 콘텐츠를 꾸준히 발행했습니다.<br>
+            도메인·호스팅 서비스를 비교해 비용 효율적인 선택을 했고, 도메인 연결과 서버 세팅을 직접 진행했습니다.
+          </div>
+          <div class="channel-metrics">
+            <div class="c-metric">
+              <div class="c-metric-num">5천+</div>
+              <div class="c-metric-label">월 평균 일 방문자</div>
+            </div>
+            <div class="c-metric">
+              <div class="c-metric-num">1만+</div>
+              <div class="c-metric-label">최고 일 방문자</div>
+            </div>
+          </div>
+          <div class="tags" style="margin-top:16px;">
+            <span class="tag tag-gold">Domain / Server Setup</span>
+            <span class="tag tag-rose">Cost Comparison</span>
+            <span class="tag tag-gold">Self-taught</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS (원본 문구 유지) -->
   <section id="skills" class="sec">
     <div class="sec-inner">
       <div class="sec-eyebrow reveal">Skills</div>
@@ -566,7 +697,7 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
+  <!-- CONTACT (원본 유지) -->
   <section id="contact" class="sec">
     <div class="contact-inner">
       <div class="sec-eyebrow reveal">Contact</div>
@@ -609,5 +740,3 @@
   </script>
 </body>
 </html>
-
-<a href="https://hits.sh/jihyun-kr.github.io/hit-counter"><img alt="Hits" src="https://hits.sh/jihyun-kr.github.io/hit-counter.svg?style=flat"/></a>
