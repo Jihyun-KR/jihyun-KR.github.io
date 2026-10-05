@@ -467,38 +467,97 @@
       <div class="sec-eyebrow reveal">Projects</div>
       <h2 class="sec-title reveal">직접 만든 것들</h2>
 
-      <div class="proj-group-label reveal">완료된 프로젝트</div>
-
-      <!-- MAIN: Body ML Collector -->
+      <!-- MAIN: 카페 수요 예측 -->
       <div class="proj-feature reveal">
-        <span class="feat-badge">FEATURED</span>
+        <span class="feat-badge">NEW</span>
         <div class="proj-num-feat">01</div>
-        <h3 class="proj-title-feat">Body ML Collector</h3>
-        <p class="proj-role">✦ Personal Project — 기획 · 설계 · 구현 전 과정</p>
+        <h3 class="proj-title-feat">내일 몇 잔 팔릴까</h3>
+        <p class="proj-role">✦ Personal Project — 날씨 기반 카페 수요 예측 · 기획부터 대시보드까지</p>
         <p class="proj-desc-feat">
-          Privacy-Protected Architecture 기반 신체 데이터 수집 도구.<br>
-          MediaPipe로 실시간 포즈 추정 후 서버 전송 없이 로컬에서 처리하는 구조로,
-          ML 학습용 체형 데이터를 프라이버시를 보호하며 수집합니다.<br>
-          기획부터 구현, PRD 작성, 배포까지 혼자 진행한 개인 프로젝트입니다.
+          매장에서 매일 감으로 하던 발주를, 날씨와 요일 데이터로 조금 더 정확하게 해보자는 프로젝트.<br>
+          기온·강수량·요일로 메뉴별 판매량을 예측하고, 예측 결과를 원두·우유·컵 수량 같은
+          <em style="color:var(--rose);font-style:normal">바로 준비할 수 있는 단위</em>로 바꿔 보여줍니다.<br>
+          현장에서 흔히 쓰는 "최근 4주 같은 요일 평균"보다 <strong>예측 오차를 37% 줄였어요.</strong>
         </p>
         <div class="tags">
-          <span class="tag tag-rose">MediaPipe</span>
-          <span class="tag tag-gold">OpenCV</span>
-          <span class="tag tag-rose">Azure ML</span>
-          <span class="tag tag-gold">Privacy Architecture</span>
-          <span class="tag tag-rose">GitHub Pages</span>
+          <span class="tag tag-rose">Demand Forecasting</span>
+          <span class="tag tag-gold">scikit-learn</span>
+          <span class="tag tag-rose">Python</span>
+          <span class="tag tag-gold">Dashboard</span>
+          <span class="tag tag-rose">Chart.js</span>
         </div>
         <div class="proj-links">
-          <a href="https://jihyun-kr.github.io/BodyMLCollector/" class="proj-link rose" target="_blank">Live Demo →</a>
-          <a href="https://jihyun-kr.github.io/Project1/" class="proj-link ghost" target="_blank">PRD →</a>
+          <a href="https://jihyun-kr.github.io/cafe-demand-forecast/dashboard/" class="proj-link rose" target="_blank">Live Demo →</a>
+          <a href="https://github.com/Jihyun-KR/cafe-demand-forecast" class="proj-link ghost" target="_blank">GitHub →</a>
         </div>
       </div>
 
-      <div class="proj-grid">
+      <div class="proj-grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));">
         <div class="proj-card reveal">
           <div class="proj-num">02</div>
+          <h3 class="proj-title" style="font-style:normal;letter-spacing:.02em;">IS THIS CODE OKAY</h3>
+          <p class="proj-role" style="font-size:.74rem;color:var(--rose);margin-bottom:10px;font-family:'Pretendard',sans-serif;letter-spacing:.08em;">✦ Personal Project — LangGraph 멀티 에이전트 · 설계 · 구현 전 과정</p>
+          <p class="proj-desc">
+            "AI가 짜준 이 코드, 그대로 배포해도 되는 걸까?"라는 질문에서 출발한 프로젝트.
+            보안·확장성·비용·유지보수 체커 4개가 동시에 코드를 살펴보고,
+            코딩을 모르는 창업가도 이해할 수 있는 말과 <em style="color:var(--rose);font-style:normal">"개발자에게 이렇게 요청해보세요"</em> 문장으로 알려줍니다.
+          </p>
+          <div class="tags">
+            <span class="tag tag-gold">LangGraph</span>
+            <span class="tag tag-rose">Multi-Agent</span>
+            <span class="tag tag-gold">Claude API</span>
+            <span class="tag tag-rose">Structured Output</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/Jihyun-KR/langgraph-study/tree/main/projects/is-this-code-okay" class="proj-link gold" target="_blank">GitHub →</a>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" style="transition-delay:.1s">
+          <div class="proj-num">03</div>
+          <h3 class="proj-title">Body ML Collector</h3>
+          <p class="proj-role" style="font-size:.74rem;color:var(--rose);margin-bottom:10px;font-family:'Pretendard',sans-serif;letter-spacing:.08em;">✦ Personal Project — 기획 · 설계 · 구현 전 과정</p>
+          <p class="proj-desc">
+            Privacy-Protected Architecture 기반 신체 데이터 수집 도구.
+            MediaPipe로 실시간 포즈를 추정하고 서버 전송 없이 브라우저에서만 처리해,
+            ML 학습용 체형 데이터를 프라이버시를 지키며 모읍니다.
+            기획부터 PRD 작성, 배포까지 혼자 진행했어요.
+          </p>
+          <div class="tags">
+            <span class="tag tag-rose">MediaPipe</span>
+            <span class="tag tag-gold">Privacy Architecture</span>
+            <span class="tag tag-rose">GitHub Pages</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://jihyun-kr.github.io/BodyMLCollector/" class="proj-link rose" target="_blank">Live Demo →</a>
+            <a href="https://jihyun-kr.github.io/Project1/" class="proj-link ghost" target="_blank">PRD →</a>
+          </div>
+        </div>
+
+        <div class="proj-card reveal">
+          <div class="proj-num">04</div>
+          <h3 class="proj-title">이사 AI Agent 앱</h3>
+          <p class="proj-role" style="font-size:.74rem;color:var(--rose);margin-bottom:10px;font-family:'Pretendard',sans-serif;letter-spacing:.08em;">✦ Team Project (6인) — 페르소나 설계 · 검색 인덱스 설계 · 시연 영상 · 발표</p>
+          <p class="proj-desc">
+            계약 전 위험 확인부터 이사 후 행정 처리까지, 이사 준비 전 과정을 AI가 동행하는 모바일 서비스.
+            사용자 페르소나와 시나리오를 설계하고, 문서 인식 학습 데이터 라벨링과 검색 인덱스 설계,
+            시연 영상 제작과 발표를 맡았습니다.
+          </p>
+          <div class="tags">
+            <span class="tag tag-rose">Azure AI Search</span>
+            <span class="tag tag-gold">Document Intelligence</span>
+            <span class="tag tag-rose">Azure OpenAI</span>
+            <span class="tag tag-gold">RAG</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/Jihyun-KR/ISAISANGMU" class="proj-link gold" target="_blank">GitHub →</a>
+          </div>
+        </div>
+
+        <div class="proj-card reveal" style="transition-delay:.1s">
+          <div class="proj-num">05</div>
           <h3 class="proj-title">AI Stock Chart Classifier</h3>
-	  <p class="proj-role" style="font-size:.74rem;color:var(--rose);margin-bottom:10px;font-family:'Pretendard',sans-serif;letter-spacing:.08em;">✦ Personal Project — 아키텍처 · 모델 설계 · 구현 전 과정</p>
+          <p class="proj-role" style="font-size:.74rem;color:var(--rose);margin-bottom:10px;font-family:'Pretendard',sans-serif;letter-spacing:.08em;">✦ Personal Project — 아키텍처 · 모델 설계 · 구현 전 과정</p>
           <p class="proj-desc">
             주식 차트의 시각 패턴을 AI가 어떻게 인식하는지 탐구한 프로젝트.
             수익률 예측보다 <em style="color:var(--rose);font-style:normal">패턴 분류 자체</em>에 집중하며,
@@ -512,50 +571,6 @@
           <div class="proj-links">
             <a href="https://jihyun-kr.github.io/Stock-Chart-Selection-Model/" class="proj-link gold" target="_blank">GitHub →</a>
           </div>
-        </div>
-
-        <div class="proj-card reveal" style="transition-delay:.1s">
-          <div class="proj-num">03</div>
-          <h3 class="proj-title">이사 AI Agent 앱</h3>
-          <p class="proj-role" style="font-size:.74rem;color:var(--rose);margin-bottom:10px;font-family:'Pretendard',sans-serif;letter-spacing:.08em;">✦ Team Project — 검색 인덱스 설계 · 시연 영상 기획, 촬영, 편집</p>
-          <p class="proj-desc">
-            이사 준비 전 과정을 AI가 동행하는 챗봇 서비스.
-            서비스 시연 영상 기획, 촬영, 편집을 담당했습니다.
-            Azure OpenAI + RAG 기반 팀 프로젝트입니다.
-          </p>
-          <div class="tags">
-            <span class="tag tag-rose">Azure AI Search</span>
-            <span class="tag tag-gold">Index Design</span>
-            <span class="tag tag-rose">Azure OpenAI</span>
-            <span class="tag tag-gold">RAG</span>
-          </div>
-          <div class="proj-links">
-            <a href="https://github.com/Jihyun-KR/ISAISANGMU" class="proj-link gold" target="_blank">GitHub →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="proj-group-label wip reveal">제작 중인 프로젝트</div>
-
-      <div class="proj-grid">
-        <div class="proj-card wip reveal">
-          <div class="proj-num">04</div>
-          <h3 class="proj-title" style="font-style:normal;letter-spacing:.02em;">IS THIS CODE OKAY</h3>
-          <p class="proj-role" style="font-size:.74rem;color:var(--rose);margin-bottom:10px;font-family:'Pretendard',sans-serif;letter-spacing:.08em;">✦ Personal Project — LangGraph 기반 코드 위험도 진단 도구</p>
-          <p class="proj-desc">
-            "AI가 짜준 이 코드, 그대로 배포해도 되는 걸까?"라는 질문에서 출발한 프로젝트.
-            코딩을 잘 모르는 1인 창업가·기획자가 AI(ChatGPT, Claude, Cursor 등)로 생성한 코드를
-            보안·확장성 관점에서 쉬운 말로 진단받을 수 있도록 돕는 LangGraph 기반 도구입니다. AI 에이전트 아키텍처를 이해하고자 합니다. 
-          </p>
-          <div class="tags">
-            <span class="tag tag-gold">LangGraph</span>
-            <span class="tag tag-rose">Python</span>
-            <span class="tag tag-gold">Risk Diagnosis</span>
-          </div>
-          <div class="proj-links">
-            <a href="https://github.com/Jihyun-KR/langgraph-study" class="proj-link gold" target="_blank">GitHub →</a>
-          </div>
-          <span class="proj-wip">✦ 제작 중</span>
         </div>
       </div>
     </div>
@@ -667,6 +682,18 @@
           <div class="skill-name">AICE BASIC</div>
           <div class="skill-desc">AI 모델 역량 데이터 전처리 & 머신러닝/딥러닝</div>
         </div>
+		<div class="skill">
+          <div class="skill-badge badge-cert">CERT</div>
+          <div class="skill-icon">☕</div>
+          <div class="skill-name">바리스타 2급</div>
+          <div class="skill-desc">커피 추출 · 음료 제조 실무</div>
+        </div>
+		<div class="skill">
+          <div class="skill-badge badge-cert">CERT</div>
+          <div class="skill-icon">🗣️</div>
+          <div class="skill-name">TOEIC Speaking AL</div>
+          <div class="skill-desc">160점 · Advanced Low</div>
+        </div>
       </div>
 
       <p class="skill-section-title reveal" style="margin-top:24px;">✦ 교육과정 이수 기술</p>
@@ -681,7 +708,13 @@
           <div class="skill-badge badge-learn">LEARNED</div>
           <div class="skill-icon">🐍</div>
           <div class="skill-name">Python</div>
-          <div class="skill-desc">데이터 전처리 · ML 모델 기초</div>
+          <div class="skill-desc">데이터 전처리 · scikit-learn 수요 예측 모델</div>
+        </div>
+        <div class="skill dim">
+          <div class="skill-badge badge-learn">LEARNED</div>
+          <div class="skill-icon">🕸️</div>
+          <div class="skill-name">LangGraph</div>
+          <div class="skill-desc">멀티 에이전트 · 조건부 분기 · 구조화된 출력</div>
         </div>
         <div class="skill dim">
           <div class="skill-badge badge-learn">LEARNED</div>
@@ -716,7 +749,7 @@
     </div>
   </section>
 
-  <footer>flowen © 2025 &nbsp;·&nbsp; made with <span>🌸</span></footer>
+  <footer>flowen © 2026 &nbsp;·&nbsp; made with <span>🌸</span></footer>
 
   <script>
     const els = document.querySelectorAll('.reveal');
